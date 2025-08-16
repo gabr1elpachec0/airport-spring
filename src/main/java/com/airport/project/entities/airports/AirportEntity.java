@@ -1,5 +1,7 @@
-package com.airport.project.entity;
+package com.airport.project.entities.airports;
 
+import com.airport.project.dtos.airports.AirportDTO;
+import com.airport.project.controllers.airports.requests.AirportCreateRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -7,18 +9,18 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "airports")
-public class Airport {
+public class AirportEntity {
     @Id
     @Column(name = "id", length = 5)
     private String id;
     @Column(name = "name", nullable = false)
     private String name;
 
-    public Airport() {};
+    public AirportEntity() {}
 
-    public Airport(String id, String name) {
-        this.id = id;
-        this.name = name;
+    public AirportEntity(AirportCreateRequest payload) {
+        this.id = payload.id();
+        this.name = payload.name();
     }
 
     public String getId() {
@@ -35,5 +37,9 @@ public class Airport {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public AirportDTO toAirport() {
+        return new AirportDTO(id, name);
     }
 }

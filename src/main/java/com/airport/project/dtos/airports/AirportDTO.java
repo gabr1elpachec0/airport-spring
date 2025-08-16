@@ -1,8 +1,10 @@
-package com.airport.project.dto;
+package com.airport.project.dtos.airports;
 
 public class AirportDTO {
     private String id;
     private String name;
+
+    public AirportDTO() {};
 
     public AirportDTO(String id, String name) {
         this.id = id;
@@ -25,3 +27,4 @@ public class AirportDTO {
         this.name = name;
     }
 }
+
