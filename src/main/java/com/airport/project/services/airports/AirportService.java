@@ -4,6 +4,7 @@ import com.airport.project.dtos.airports.AirportDTO;
 import com.airport.project.controllers.airports.requests.AirportCreateRequest;
 import com.airport.project.controllers.airports.requests.AirportUpdateRequest;
 import com.airport.project.entities.airports.AirportEntity;
+import com.airport.project.exceptions.airports.AirportAlreadyExistsException;
 import com.airport.project.exceptions.airports.AirportNotFoundException;
 import com.airport.project.repositories.airports.AirportRepository;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class AirportService {
     }
 
     public AirportDTO createAirport(AirportCreateRequest payload) {
+        Optional<AirportEntity> airportEntity = airportRepository.findById(payload.id());
+
+        if (airportEntity.isPresent()) throw new AirportAlreadyExistsException("Airport already exists.");
+
         AirportEntity registeredAirportEntity = airportRepository.save(new AirportEntity(payload));
 
         return registeredAirportEntity.toAirport();
