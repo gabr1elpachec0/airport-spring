@@ -1,4 +1,4 @@
-package com.airport.project.dtos.airports;
+package com.airport.project.dtos;
 
 public class AirportDTO {
     private String id;

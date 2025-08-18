@@ -1,7 +1,7 @@
-package com.airport.project.entities.airports;
+package com.airport.project.entities;
 
-import com.airport.project.dtos.airports.AirportDTO;
-import com.airport.project.controllers.airports.requests.AirportCreateRequest;
+import com.airport.project.dtos.AirportDTO;
+import com.airport.project.controllers.requests.airports.AirportCreateRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

@@ -1,12 +1,12 @@
-package com.airport.project.services.airports;
+package com.airport.project.services;
 
-import com.airport.project.dtos.airports.AirportDTO;
-import com.airport.project.controllers.airports.requests.AirportCreateRequest;
-import com.airport.project.controllers.airports.requests.AirportUpdateRequest;
-import com.airport.project.entities.airports.AirportEntity;
-import com.airport.project.exceptions.airports.AirportAlreadyExistsException;
-import com.airport.project.exceptions.airports.AirportNotFoundException;
-import com.airport.project.repositories.airports.AirportRepository;
+import com.airport.project.dtos.AirportDTO;
+import com.airport.project.controllers.requests.airports.AirportCreateRequest;
+import com.airport.project.controllers.requests.airports.AirportUpdateRequest;
+import com.airport.project.entities.AirportEntity;
+import com.airport.project.exceptions.AlreadyExistsException;
+import com.airport.project.exceptions.NotFoundException;
+import com.airport.project.repositories.AirportRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class AirportService {
     public AirportDTO createAirport(AirportCreateRequest payload) {
         Optional<AirportEntity> airportEntity = airportRepository.findById(payload.id());
 
-        if (airportEntity.isPresent()) throw new AirportAlreadyExistsException("Airport already exists.");
+        if (airportEntity.isPresent()) throw new AlreadyExistsException("Airport already exists.");
 
         AirportEntity registeredAirportEntity = airportRepository.save(new AirportEntity(payload));
 
@@ -38,7 +38,7 @@ public class AirportService {
     public AirportDTO getAirportById(String id) {
         Optional<AirportEntity> airportEntity = airportRepository.findById(id);
 
-        if (airportEntity.isEmpty()) throw new AirportNotFoundException("Airport not found.");
+        if (airportEntity.isEmpty()) throw new NotFoundException("Airport not found.");
 
         return airportEntity.get().toAirport();
     }
@@ -46,7 +46,7 @@ public class AirportService {
     public AirportDTO updateAirport(AirportUpdateRequest payload, String id) {
         Optional<AirportEntity> airportEntity = airportRepository.findById(id);
 
-        if (airportEntity.isEmpty()) throw new AirportNotFoundException("Airport not found.");
+        if (airportEntity.isEmpty()) throw new NotFoundException("Airport not found.");
 
         AirportEntity airport = airportEntity.get();
         airport.setName(payload.name());
@@ -58,7 +58,7 @@ public class AirportService {
     public void deleteAirportById(String id) {
         Optional<AirportEntity> airportEntity = airportRepository.findById(id);
 
-        if (airportEntity.isEmpty()) throw new AirportNotFoundException("Airport not found.");
+        if (airportEntity.isEmpty()) throw new NotFoundException("Airport not found.");
 
         airportRepository.deleteById(id);
     }

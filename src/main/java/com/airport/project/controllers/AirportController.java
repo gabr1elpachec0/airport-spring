@@ -1,11 +1,11 @@
-package com.airport.project.controllers.airports;
+package com.airport.project.controllers;
 
-import com.airport.project.controllers.airports.responses.AirportMessageResponse;
-import com.airport.project.dtos.airports.AirportDTO;
-import com.airport.project.controllers.airports.requests.AirportCreateRequest;
-import com.airport.project.controllers.airports.responses.AirportCreateResponse;
-import com.airport.project.controllers.airports.requests.AirportUpdateRequest;
-import com.airport.project.services.airports.AirportService;
+import com.airport.project.controllers.responses.CreateResponse;
+import com.airport.project.controllers.responses.MessageResponse;
+import com.airport.project.dtos.AirportDTO;
+import com.airport.project.controllers.requests.airports.AirportCreateRequest;
+import com.airport.project.controllers.requests.airports.AirportUpdateRequest;
+import com.airport.project.services.AirportService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +22,9 @@ public class AirportController {
     }
 
     @PostMapping
-    ResponseEntity<AirportCreateResponse> createAirport(@RequestBody AirportCreateRequest payload) {
+    ResponseEntity<CreateResponse> createAirport(@RequestBody AirportCreateRequest payload) {
         AirportDTO airportDTO = airportService.createAirport(payload);
-        return new ResponseEntity<>(new AirportCreateResponse(airportDTO.getId()), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CreateResponse(airportDTO.getId()), HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -46,8 +46,8 @@ public class AirportController {
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<AirportMessageResponse> deleteAirportById(@PathVariable String id) {
+    ResponseEntity<MessageResponse> deleteAirportById(@PathVariable String id) {
         airportService.deleteAirportById(id);
-        return new ResponseEntity<>(new AirportMessageResponse("Airport " + id + " deleted successfully"), HttpStatus.OK);
+        return new ResponseEntity<>(new MessageResponse("Airport " + id + " deleted successfully"), HttpStatus.OK);
     }
 }

@@ -1,6 +1,6 @@
-package com.airport.project.repositories.airports;
+package com.airport.project.repositories;
 
-import com.airport.project.entities.airports.AirportEntity;
+import com.airport.project.entities.AirportEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
