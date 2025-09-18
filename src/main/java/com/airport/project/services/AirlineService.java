@@ -1,6 +1,7 @@
 package com.airport.project.services;
 
 import com.airport.project.controllers.requests.airlines.AirlineCreateRequest;
+import com.airport.project.controllers.requests.airlines.AirlineUpdateRequest;
 import com.airport.project.controllers.responses.CreateResponse;
 import com.airport.project.dtos.AirlineDTO;
 import com.airport.project.entities.AirlineEntity;
@@ -43,5 +44,25 @@ public class AirlineService {
         AirlineEntity airline = airlineEntity.get();
 
         return airline.toAirline();
+    }
+
+    public AirlineDTO updateAirline(UUID id, AirlineUpdateRequest payload) {
+        Optional<AirlineEntity> airlineEntity = airlineRepository.findById(id);
+
+        if (airlineEntity.isEmpty()) throw new NotFoundException("Airline does not exist.");
+
+        AirlineEntity airline = airlineEntity.get();
+        airline.setName(payload.name());
+        airlineRepository.save(airline);
+
+        return airline.toAirline();
+    }
+
+    public void deleteAirline(UUID id) {
+        Optional<AirlineEntity> airlineEntity = airlineRepository.findById(id);
+
+        if (airlineEntity.isEmpty()) throw new NotFoundException("Airline does not exist.");
+
+        airlineRepository.delete(airlineEntity.get());
     }
 }
