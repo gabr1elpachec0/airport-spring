@@ -2,14 +2,15 @@ package com.airport.project.controllers;
 
 import com.airport.project.controllers.requests.airplanes.AirplaneCreateRequest;
 import com.airport.project.controllers.responses.CreateResponse;
+import com.airport.project.dtos.AirplaneDTO;
 import com.airport.project.services.AirplaneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/airplanes")
@@ -21,5 +22,23 @@ public class AirplaneController {
     ResponseEntity<CreateResponse> createAirplane(@RequestBody AirplaneCreateRequest payload) {
         CreateResponse airplaneId = airplaneService.createAirplane(payload);
         return new ResponseEntity<>(airplaneId, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    ResponseEntity<List<AirplaneDTO>> getAllAirplanes() {
+        List<AirplaneDTO> airplanes = airplaneService.getAllAirplanes();
+        return new ResponseEntity<>(airplanes, HttpStatus.OK);
+    }
+
+    @GetMapping("/by-airline/{airlineId}")
+    ResponseEntity<List<AirplaneDTO>> getAllAirplanesByAirline(@PathVariable UUID airlineId) {
+        List<AirplaneDTO> airplanes = airplaneService.getAllAirplanesByAirlineId(airlineId);
+        return new ResponseEntity<>(airplanes, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<AirplaneDTO> getAirplaneById(@PathVariable UUID id) {
+        AirplaneDTO airplane = airplaneService.getAirplaneById(id);
+        return new ResponseEntity<>(airplane, HttpStatus.OK);
     }
 }

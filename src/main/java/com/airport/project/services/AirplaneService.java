@@ -11,7 +11,9 @@ import com.airport.project.repositories.AirplaneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AirplaneService {
@@ -31,5 +33,29 @@ public class AirplaneService {
         );
 
         return new CreateResponse(registeredAirplane.getId().toString());
+    }
+
+    public List<AirplaneDTO> getAllAirplanes() {
+        List<AirplaneEntity> airplaneEntities = airplaneRepository.findAll();
+
+        return airplaneEntities.stream()
+                .map(it -> new AirplaneDTO(it.getId(), it.getModel(), it.getAirline()))
+                .toList();
+    }
+
+    public List<AirplaneDTO> getAllAirplanesByAirlineId(UUID airlineId) {
+        List<AirplaneEntity> airplaneEntities = airplaneRepository.findAllByAirlineId(airlineId);
+
+        return airplaneEntities.stream()
+                .map(it -> new AirplaneDTO(it.getId(), it.getModel(), it.getAirline()))
+                .toList();
+    }
+
+    public AirplaneDTO getAirplaneById(UUID id) {
+        Optional<AirplaneEntity> airplaneEntity = airplaneRepository.findById(id);
+
+        if (airplaneEntity.isEmpty()) throw new NotFoundException("Airplane does not exist.");
+
+        return airplaneEntity.get().toAirplane();
     }
 }
