@@ -16,12 +16,13 @@ public class AirplaneEntity {
     @Column(name = "model")
     private String model;
 
-    @Column(name = "airline")
-    private UUID airline;
+    @ManyToOne
+    @JoinColumn(name = "airline", nullable = false)
+    private AirlineEntity airline;
 
     public AirplaneEntity() {}
 
-    public AirplaneEntity(String model, UUID airline) {
+    public AirplaneEntity(String model, AirlineEntity airline) {
         this.model = model;
         this.airline = airline;
     }
@@ -42,15 +43,15 @@ public class AirplaneEntity {
         this.model = model;
     }
 
-    public UUID getAirline() {
+    public AirlineEntity getAirline() {
         return airline;
     }
 
-    public void setAirline(UUID airline) {
+    public void setAirline(AirlineEntity airline) {
         this.airline = airline;
     }
 
     public AirplaneDTO toAirplane() {
-        return new AirplaneDTO(id, model, airline);
+        return new AirplaneDTO(id, model, airline.toAirline());
     }
 }

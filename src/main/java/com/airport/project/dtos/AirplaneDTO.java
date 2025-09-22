@@ -5,11 +5,11 @@ import java.util.UUID;
 public class AirplaneDTO {
     private UUID id;
     private String model;
-    private UUID airline;
+    private AirlineDTO airline;
 
     public AirplaneDTO() {}
 
-    public AirplaneDTO(UUID id, String model, UUID airline) {
+    public AirplaneDTO(UUID id, String model, AirlineDTO airline) {
         this.id = id;
         this.model = model;
         this.airline = airline;
@@ -31,11 +31,11 @@ public class AirplaneDTO {
         this.model = model;
     }
 
-    public UUID getAirline() {
+    public AirlineDTO getAirline() {
         return airline;
     }
 
-    public void setAirline(UUID airline) {
+    public void setAirline(AirlineDTO airline) {
         this.airline = airline;
     }
 }

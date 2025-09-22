@@ -1,7 +1,9 @@
 package com.airport.project.controllers;
 
 import com.airport.project.controllers.requests.airplanes.AirplaneCreateRequest;
+import com.airport.project.controllers.requests.airplanes.AirplaneUpdateRequest;
 import com.airport.project.controllers.responses.CreateResponse;
+import com.airport.project.controllers.responses.MessageResponse;
 import com.airport.project.dtos.AirplaneDTO;
 import com.airport.project.services.AirplaneService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +42,17 @@ public class AirplaneController {
     ResponseEntity<AirplaneDTO> getAirplaneById(@PathVariable UUID id) {
         AirplaneDTO airplane = airplaneService.getAirplaneById(id);
         return new ResponseEntity<>(airplane, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    ResponseEntity<AirplaneDTO> updateAirplane(@PathVariable UUID id, @RequestBody AirplaneUpdateRequest payload) {
+        AirplaneDTO airplane = airplaneService.updateAirplane(id, payload);
+        return new ResponseEntity<>(airplane, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<MessageResponse> deleteAirplane(@PathVariable UUID id) {
+        airplaneService.deleteAirplane(id);
+        return new ResponseEntity<>(new MessageResponse("Airplane " + id + " deleted successfully."), HttpStatus.OK);
     }
 }
