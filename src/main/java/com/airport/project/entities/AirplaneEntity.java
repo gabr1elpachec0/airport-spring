@@ -3,6 +3,8 @@ package com.airport.project.entities;
 import com.airport.project.dtos.AirplaneDTO;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,6 +21,9 @@ public class AirplaneEntity {
     @ManyToOne
     @JoinColumn(name = "airline", nullable = false)
     private AirlineEntity airline;
+
+    @OneToMany(mappedBy = "airplane")
+    private List<FlightEntity> flights = new ArrayList<>();
 
     public AirplaneEntity() {}
 
@@ -49,6 +54,14 @@ public class AirplaneEntity {
 
     public void setAirline(AirlineEntity airline) {
         this.airline = airline;
+    }
+
+    public List<FlightEntity> getFlights() {
+        return flights;
+    }
+
+    public void setFlights(List<FlightEntity> flights) {
+        this.flights = flights;
     }
 
     public AirplaneDTO toAirplane() {

@@ -2,10 +2,10 @@ package com.airport.project.entities;
 
 import com.airport.project.dtos.AirportDTO;
 import com.airport.project.controllers.requests.airports.AirportCreateRequest;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "airports")
@@ -15,6 +15,12 @@ public class AirportEntity {
     private String id;
     @Column(name = "name", nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "departureAirport")
+    private List<FlightEntity> flightsDeparture = new ArrayList<>();
+
+    @OneToMany(mappedBy = "arrivalAirport")
+    private List<FlightEntity> flightsArrival = new ArrayList<>();
 
     public AirportEntity() {}
 
