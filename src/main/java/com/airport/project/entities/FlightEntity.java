@@ -34,9 +34,8 @@ public class FlightEntity {
 
     public FlightEntity() {}
 
-    public FlightEntity(UUID id, LocalDateTime departureDate, LocalDateTime arrivalDate, AirportEntity departureAirport,
+    public FlightEntity(LocalDateTime departureDate, LocalDateTime arrivalDate, AirportEntity departureAirport,
                         AirportEntity arrivalAirport, AirplaneEntity airplane) {
-        this.id = id;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
         this.departureAirport = departureAirport;
