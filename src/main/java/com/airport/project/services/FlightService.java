@@ -30,13 +30,13 @@ public class FlightService {
     private AirplaneRepository airplaneRepository;
 
     public CreateResponse createFlight(CreateFlightRequest payload) {
-        Optional<AirportEntity> departureAirportEntity = airportRepository.findById(payload.departureAirportId());
+        Optional<AirportEntity> departureAirportEntity = airportRepository.findById(payload.departureAirport());
         if (departureAirportEntity.isEmpty()) throw new NotFoundException("Departure airport does not exist.");
 
-        Optional<AirportEntity> arrivalAirportEntity = airportRepository.findById(payload.arrivalAirportId());
+        Optional<AirportEntity> arrivalAirportEntity = airportRepository.findById(payload.arrivalAirport());
         if (arrivalAirportEntity.isEmpty()) throw new NotFoundException("Arrival airport does not exist.");
 
-        Optional<AirplaneEntity> airplaneEntity = airplaneRepository.findById(payload.airplaneId());
+        Optional<AirplaneEntity> airplaneEntity = airplaneRepository.findById(payload.airplane());
         if (airplaneEntity.isEmpty()) throw new NotFoundException("Airplane does not exist.");
 
         FlightEntity flightEntity = new FlightEntity(
@@ -72,18 +72,18 @@ public class FlightService {
 
         if (payload.departureDate().isPresent()) flight.setDepartureDate(payload.departureDate().get());
         if (payload.arrivalDate().isPresent()) flight.setArrivalDate(payload.arrivalDate().get());
-        if (payload.departureAirportId().isPresent()) {
-            Optional<AirportEntity> departureAirportEntity = airportRepository.findById(payload.departureAirportId().get());
+        if (payload.departureAirport().isPresent()) {
+            Optional<AirportEntity> departureAirportEntity = airportRepository.findById(payload.departureAirport().get());
             if (departureAirportEntity.isEmpty()) throw new NotFoundException("Departure airport does not exist.");
             flight.setDepartureAirport(departureAirportEntity.get());
         }
-        if (payload.arrivalAirportId().isPresent()) {
-            Optional<AirportEntity> arrivalAirportEntity = airportRepository.findById(payload.arrivalAirportId().get());
+        if (payload.arrivalAirport().isPresent()) {
+            Optional<AirportEntity> arrivalAirportEntity = airportRepository.findById(payload.arrivalAirport().get());
             if (arrivalAirportEntity.isEmpty()) throw new NotFoundException("Arrival airport does not exist.");
             flight.setArrivalAirport(arrivalAirportEntity.get());
         }
-        if (payload.airplaneId().isPresent()) {
-            Optional<AirplaneEntity> airplaneEntity = airplaneRepository.findById(payload.airplaneId().get());
+        if (payload.airplane().isPresent()) {
+            Optional<AirplaneEntity> airplaneEntity = airplaneRepository.findById(payload.airplane().get());
             if (airplaneEntity.isEmpty()) throw new NotFoundException("Airplane does not exist.");
             flight.setAirplane(airplaneEntity.get());
         }
